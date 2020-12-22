@@ -1,0 +1,431 @@
+openapi: 3.0.3
+info:
+  title: stocks
+  version: 0.0.1
+  description: stocks
+  contact:
+    name: tiger
+servers:
+  - url: http://localhost
+tags:
+  - name: strategy
+  - name: groups
+  - name: subgroups
+  - name: stocks
+paths:
+  /strategy:
+    get:
+      operationId: get_strategy
+      tags:
+      - strategy
+      description: get strategy
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/strategy"
+    put:
+      operationId: set_strategy
+      tags:
+      - strategy
+      description: set strategy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/strategy"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              example: group allocations do not add up to 100%
+  /groups:
+    get:
+      operationId: get_groups
+      tags:
+      - groups
+      description: get groups
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/group"
+    post:
+      operationId: add_group
+      tags:
+      - groups
+      description: add a group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/group"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/group"
+  /groups/{group_uid}:
+    get:
+      operationId: get_group
+      tags:
+      - groups
+      description: get a group
+      parameters:
+        - name: group_uid
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/group/properties/uid"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/group"
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              example: group {group_uid} not found
+    put:
+      operationId: update_group
+      tags:
+      - groups
+      description: update a group
+      parameters:
+        - name: group_uid
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/group/properties/uid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/group"
+      responses:
+        "200":
+          description: OK
+    delete:
+      operationId: remove_group
+      tags:
+      - groups
+      description: remove a group
+      parameters:
+        - name: group_uid
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/group/properties/uid"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              example: group {group_uid} percentage is still bigger than 0 in global strategy
+  /groups/{group_uid}/subgroups:
+    get:
+      operationId: get_subgroups
+      tags:
+      - subgroups
+      description: get subgroups
+      parameters:
+        - name: group_uid
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/group/properties/uid"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/subgroup"
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              example: group {group_uid} not found
+    post:
+      operationId: add_subgroup
+      tags:
+      - subgroups
+      description: add a subgroup
+      parameters:
+        - name: group_uid
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/group/properties/uid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/subgroup"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/subgroup"
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              example: group {group_uid} not found
+  /groups/{group_uid}/subgroups/{subgroup_uid}:
+    put:
+      operationId: update_subgroup
+      tags:
+      - subgroups
+      description: update a subgroup
+      parameters:
+        - name: group_uid
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/group/properties/uid"
+        - name: subgroup_uid
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/subgroup/properties/uid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/subgroup"
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              example: subgroup {subgroup_uid} not found
+    delete:
+      operationId: remove_subgroup
+      tags:
+      - subgroups
+      description: remove a subgroup
+      parameters:
+        - name: group_uid
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/group/properties/uid"
+        - name: subgroup_uid
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/subgroup/properties/uid"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              example: subgroup {subgroup_uid} percentage is still bigger than 0 in group strategy
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              example: subgroup {subgroup_uid} not found
+  /stocks:
+    get:
+      operationId: get_stocks
+      tags:
+        - stocks
+      description: get stocks
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/stock"
+  /stocks/{stock_name}:
+    put:
+      operationId: update_stock
+      tags:
+        - stocks
+      description: update a stock
+      parameters:
+        - name: stock_name
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/stock/properties/name"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/stock"
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              example: the stock {stock_name} was not found
+components:
+  schemas:
+    strategy:
+      properties:
+        group_allocations:
+          type: array
+          items:
+            type: object
+            properties:
+              uid:
+                type: string
+                example: d9b06937-7548-456e-aab5-b2591d7a2575
+              percentage:
+                type: number
+                format: float
+                maximum: 1
+                minimum: 0
+                example: 0.382
+    group:
+      required:
+        - name
+      properties:
+        uid:
+          type: string
+          readOnly: true
+          example: d9b06937-7548-456e-aab5-b2591d7a2575
+        name:
+          type: string
+          example: low_risks_cad
+        expected_allocation:
+          type: number
+          format: float
+          readOnly: true
+          example: 13820.67
+        actual_equity:
+          type: number
+          format: float
+          readOnly: true
+          example: 13770.58
+        actual_in_market:
+          type: number
+          format: float
+          readOnly: true
+          example: 11541.73
+        cash:
+          type: number
+          format: float
+          readOnly: true
+          example: 2228.85
+        buying_power:
+          type: number
+          format: float
+          readOnly: true
+          example: 38.20
+        subgroups:
+          type: array
+          items:
+            type: object
+            properties:
+              uid:
+                type: string
+                example: 99ea0fb6-fba1-4c8a-9933-638344ab4d19
+              percentage:
+                type: number
+                format: float
+                minimum: 0
+                maximum: 1
+                example: 0.618
+    subgroup:
+      required:
+        - name
+      properties:
+        uid:
+          type: string
+          readOnly: true
+          example: 99ea0fb6-fba1-4c8a-9933-638344ab4d19
+        name:
+          type: string
+          example: tech_heavy
+        expected_allocation:
+          type: number
+          format: float
+          readOnly: true
+          example: 8547.35
+        expected_equity:
+          type: number
+          format: float
+          readOnly: true
+          example: 8510.22
+        cash:
+          type: number
+          format: float
+          readOnly: true
+          example: 1377.43
+        count:
+          type: integer
+          readOnly: true
+          example: 2
+        stocks:
+          type: array
+          items:
+            type: string
+          example:
+            - QQC.F
+            - ZNQ
+    stock:
+      properties:
+        name:
+          type: string
+          readOnly: true
+          example: EMQQ
+        expected_allocation:
+          type: number
+          format: float
+          readOnly: true
+          example: 1283.04
+        expected_equity:
+          type: number
+          format: float
+          readOnly: true
+          example: 1267.61
+        actual_equity:
+          type: number
+          format: float
+          readOnly: true
+          example: 759.48
+        gap:
+          type: number
+          format: float
+          readOnly: true
+          example: 508.13
+        buying:
+          type: number
+          format: float
+          readOnly: true
+        notes:
+          type: string
+          example: keep it for long term

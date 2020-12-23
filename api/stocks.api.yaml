@@ -87,7 +87,8 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/group/properties/uid"
+            type: string
+            example: d9b06937-7548-456e-aab5-b2591d7a2575
       responses:
         "200":
           description: OK
@@ -110,7 +111,8 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/group/properties/uid"
+            type: string
+            example: d9b06937-7548-456e-aab5-b2591d7a2575
       requestBody:
         content:
           application/json:
@@ -129,7 +131,8 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/group/properties/uid"
+            type: string
+            example: d9b06937-7548-456e-aab5-b2591d7a2575
       responses:
         "200":
           description: OK
@@ -149,7 +152,8 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/group/properties/uid"
+            type: string
+            example: d9b06937-7548-456e-aab5-b2591d7a2575
       responses:
         "200":
           description: OK
@@ -174,7 +178,8 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/group/properties/uid"
+            type: string
+            example: d9b06937-7548-456e-aab5-b2591d7a2575
       requestBody:
         content:
           application/json:
@@ -203,12 +208,14 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/group/properties/uid"
+            type: string
+            example: d9b06937-7548-456e-aab5-b2591d7a2575
         - name: subgroup_uid
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/subgroup/properties/uid"
+            type: string
+            example: 99ea0fb6-fba1-4c8a-9933-638344ab4d19
       requestBody:
         content:
           application/json:
@@ -232,12 +239,14 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/group/properties/uid"
+            type: string
+            example: d9b06937-7548-456e-aab5-b2591d7a2575
         - name: subgroup_uid
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/subgroup/properties/uid"
+            type: string
+            example: 99ea0fb6-fba1-4c8a-9933-638344ab4d19
       responses:
         "200":
           description: OK
@@ -277,7 +286,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/stock/properties/name"
+            type: string
       requestBody:
         content:
           application/json:

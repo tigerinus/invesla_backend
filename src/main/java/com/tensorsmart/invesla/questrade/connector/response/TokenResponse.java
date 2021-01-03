@@ -1,23 +1,23 @@
-package com.tensorsmart.invesla.questrade.dto;
+package com.tensorsmart.invesla.questrade.connector.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
 
 @Getter
-public class TokenDTO {
+public class TokenResponse {
     @JsonProperty("access_token")
-    String AccessToken;
+    String accessToken;
 
     @JsonProperty("token_type")
-    String TokenType;
+    String tokenType;
 
     @JsonProperty("expires_in")
-    int ExpiresIn;
+    int expiresIn;
 
     @JsonProperty("refresh_token")
-    String RefreshToken;
+    String refreshToken;
 
     @JsonProperty("api_server")
-    String ApiServer;
+    String apiServer;
 }

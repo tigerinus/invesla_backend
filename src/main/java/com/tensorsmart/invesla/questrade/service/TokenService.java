@@ -1,10 +1,12 @@
-package com.tensorsmart.invesla.questrade;
+package com.tensorsmart.invesla.questrade.service;
 
 import java.util.Date;
 import java.util.Iterator;
 
-import com.tensorsmart.invesla.questrade.dto.TokenDTO;
-import com.tensorsmart.invesla.questrade.entity.Token;
+import com.tensorsmart.invesla.questrade.connector.TokenConnector;
+import com.tensorsmart.invesla.questrade.connector.response.TokenResponse;
+import com.tensorsmart.invesla.questrade.repository.TokenRepository;
+import com.tensorsmart.invesla.questrade.repository.entity.Token;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,13 +15,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 @Component
-public class Service {
+public class TokenService {
     final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     Token _token;
     
     @Autowired
-    Connector _connector;
+    TokenConnector _connector;
 
     @Autowired
     TokenRepository _tokenRepository;
@@ -59,17 +61,19 @@ public class Service {
         }
 
         // obtain from API
-        TokenDTO dto = _connector.getToken(refreshToken);
+        TokenResponse response = _connector.getToken(refreshToken);
 
-        if (null == dto) {
+        if (null == response) {
             LOG.error("unable to obtain new token from API");
             return;
         }
 
         _token = new Token();
-        _token.setAccessToken(dto.getAccessToken());
-        _token.setRefreshToken(dto.getRefreshToken());
-        _token.setExpiresBy(new Date().getTime() + dto.getExpiresIn() * 1000);
+        _token.setAccessToken(response.getAccessToken());
+        _token.setTokenType(response.getTokenType());
+        _token.setExpiresBy(new Date().getTime() + response.getExpiresIn() * 1000);
+        _token.setRefreshToken(response.getRefreshToken());
+        _token.setApiServer(response.getApiServer());
 
         _tokenRepository.deleteAll();
         _tokenRepository.save(_token);

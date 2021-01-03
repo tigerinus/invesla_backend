@@ -1,6 +1,6 @@
-package com.tensorsmart.invesla.questrade;
+package com.tensorsmart.invesla.questrade.repository;
 
-import com.tensorsmart.invesla.questrade.entity.Token;
+import com.tensorsmart.invesla.questrade.repository.entity.Token;
 
 import org.springframework.data.repository.CrudRepository;
 

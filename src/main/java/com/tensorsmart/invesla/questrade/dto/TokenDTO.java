@@ -1,11 +1,11 @@
-package com.tensorsmart.invesla.questrade.model;
+package com.tensorsmart.invesla.questrade.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
 
 @Getter
-public class Token {
+public class TokenDTO {
     @JsonProperty("access_token")
     String AccessToken;
 

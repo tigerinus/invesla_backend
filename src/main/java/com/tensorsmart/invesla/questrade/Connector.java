@@ -1,6 +1,6 @@
 package com.tensorsmart.invesla.questrade;
 
-import com.tensorsmart.invesla.questrade.model.Token;
+import com.tensorsmart.invesla.questrade.dto.TokenDTO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,23 +17,27 @@ public class Connector {
     final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     String _url;
-    String _key;
+    String _refreshToken;
 
     @Autowired
     RestTemplate restTemplate;
 
-    public Connector(@Value("${qt.login.url}") String url, @Value("${qt.token.key}") String key) {
+    public Connector(@Value("${qt.login.url}") String url, @Value("${qt.token.key}") String manualRefreshToken) {
         _url = url;
-        _key = key;
+        _refreshToken = manualRefreshToken;
     }
 
-    public Token GetToken() {
-        ResponseEntity<Token> response = null;
+    public TokenDTO getToken(String refreshToken) {
+        if (null != refreshToken && !refreshToken.trim().isEmpty()) {
+            _refreshToken = refreshToken;
+        }
+
+        ResponseEntity<TokenDTO> response = null;
         try {
             LOG.info("Calling {}...", _url);
             //String fullUrl = "https://5ff12a5fdb1158001748ae03.mockapi.io/oauth2/token";
-            String fullUrl = _url + _key;
-            response = restTemplate.getForEntity(fullUrl, Token.class);
+            String fullUrl = _url + _refreshToken;
+            response = restTemplate.getForEntity(fullUrl, TokenDTO.class);
         } catch (HttpClientErrorException e) {
             LOG.error(e.getMessage(), e);
             return null;

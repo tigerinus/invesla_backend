@@ -1,32 +1,72 @@
 package com.tensorsmart.invesla.questrade;
 
 import java.util.Date;
+import java.util.Iterator;
 
-import com.tensorsmart.invesla.questrade.model.Token;
+import com.tensorsmart.invesla.questrade.dto.TokenDTO;
+import com.tensorsmart.invesla.questrade.entity.Token;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
+@Component
 public class Service {
     final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     Token _token;
-    long _expires_by;
-
+    
+    @Autowired
     Connector _connector;
 
-    public Service(Connector connector) {
-        _connector = connector;
+    @Autowired
+    TokenRepository _tokenRepository;
+
+    public Token getToken() {
+        refreshTokenFromRepositoryIfNeccessary();
+        Assert.notNull(_token, "token should not be null at this point.");
+        return _token;
     }
 
-    public void RefreshTokenIfExpired() {
-        if (new Date().getTime() < _expires_by) {
-            LOG.info("token has expired.");
-            _token = _connector.GetToken();
+    private void refreshTokenFromRepositoryIfNeccessary() {
+        if (null != _token && new Date().getTime() < _token.getExpiresBy()) {
+            return;
+        }
 
-            if (null != _token) {
-                _expires_by = new Date().getTime() + _token.getExpiresIn() * 1000;
-            }
+        refreshTokenRepositoryFromAPIIfNeccessary();
+        Assert.state(_tokenRepository.count() == 1, "There should always be only 1 token at this point.");
+        Iterator<Token> i = _tokenRepository.findAll().iterator();
+        if (i.hasNext()) {
+            _token = i.next();    
         }
     }
+
+    private void refreshTokenRepositoryFromAPIIfNeccessary() {
+        Assert.state(_tokenRepository.count() <= 1, "There should always be at most 1 token in the database.");
+        Iterator<Token> i = _tokenRepository.findAll().iterator();
+
+        if (i.hasNext() && new Date().getTime() < i.next().getExpiresBy()) {
+            return;    
+        }
+
+        // obtain from API
+        String refreshToken = null == _token ? null : _token.getRefreshToken();
+        TokenDTO dto = _connector.getToken(refreshToken);
+
+        if (null == dto) {
+            LOG.error("unable to obtain new token from API");
+            return;
+        }
+
+        _token = new Token();
+        _token.setAccessToken(dto.getAccessToken());
+        _token.setRefreshToken(dto.getRefreshToken());
+        _token.setExpiresBy(new Date().getTime() + dto.getExpiresIn() * 1000);
+
+        _tokenRepository.deleteAll();
+        _tokenRepository.save(_token);
+    }
+
 }

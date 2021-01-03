@@ -47,12 +47,18 @@ public class Service {
         Assert.state(_tokenRepository.count() <= 1, "There should always be at most 1 token in the database.");
         Iterator<Token> i = _tokenRepository.findAll().iterator();
 
-        if (i.hasNext() && new Date().getTime() < i.next().getExpiresBy()) {
-            return;    
+        String refreshToken = null;
+
+        if (i.hasNext()) {
+            Token token = i.next();
+            if (new Date().getTime() < token.getExpiresBy()) {
+                return;    
+            }
+
+            refreshToken = token.getRefreshToken();
         }
 
         // obtain from API
-        String refreshToken = null == _token ? null : _token.getRefreshToken();
         TokenDTO dto = _connector.getToken(refreshToken);
 
         if (null == dto) {

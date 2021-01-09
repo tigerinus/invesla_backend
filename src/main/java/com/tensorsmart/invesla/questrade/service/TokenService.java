@@ -16,7 +16,7 @@ import org.springframework.util.Assert;
 
 @Component
 public class TokenService {
-    final Logger LOG = LoggerFactory.getLogger(this.getClass());
+    final static Logger LOG = LoggerFactory.getLogger(TokenService.class);
 
     Token _token;
     

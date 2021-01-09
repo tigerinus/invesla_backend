@@ -1,4 +1,4 @@
-package com.tensorsmart.invesla.questrade;
+package com.tensorsmart.invesla.questrade.connector.resttemplate;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,18 +26,19 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class RestTemplateConfig {
+public class Config {
 
-    final Logger LOG = LoggerFactory.getLogger(this.getClass());
-
+    final static Logger LOG = LoggerFactory.getLogger(Config.class);
 
     @Bean
-	public RestTemplate restTemplate() {
-        //HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+	public RestTemplate restTemplateWithoutHeader() {
+        RestTemplate restTemplate = new RestTemplate();
 
-        //registerKeyStore(requestFactory);
-        //noKeyStore(requestFactory);
+        return restTemplate;
+    }
 
+    @Bean
+    public RestTemplate restTemplateWithHeader() {
         RestTemplate restTemplate = new RestTemplate();
 
         return restTemplate;

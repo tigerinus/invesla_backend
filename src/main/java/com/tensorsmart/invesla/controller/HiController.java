@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class HiController {
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<String> check() {
         return ResponseEntity.ok("Hi! This is invesla.\n");
 

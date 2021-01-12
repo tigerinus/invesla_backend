@@ -43,10 +43,10 @@ paths:
           description: OK
   /stocks/{stock_name}:
     delete:
-      operationId: update_stock
+      operationId: delete_stock
       tags:
         - stocks
-      description: update a stock
+      description: delete a stock
       parameters:
         - name: stock_name
           in: path

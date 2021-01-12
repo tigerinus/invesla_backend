@@ -6,7 +6,7 @@ import java.util.Iterator;
 import com.tensorsmart.invesla.questrade.connector.TokenConnector;
 import com.tensorsmart.invesla.questrade.connector.response.TokenResponse;
 import com.tensorsmart.invesla.questrade.repository.TokenRepository;
-import com.tensorsmart.invesla.questrade.repository.entity.Token;
+import com.tensorsmart.invesla.questrade.repository.entity.TokenEntity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ import org.springframework.util.Assert;
 public class TokenService {
     final static Logger LOG = LoggerFactory.getLogger(TokenService.class);
 
-    volatile Token _token;
+    volatile TokenEntity _token;
     
     @Autowired
     TokenConnector _connector;
@@ -26,7 +26,7 @@ public class TokenService {
     @Autowired
     TokenRepository _tokenRepository;
 
-    public Token getToken() {
+    public TokenEntity getToken() {
         refreshTokenFromRepositoryIfNeccessary();
         Assert.notNull(_token, "token should not be null at this point.");
         return _token;
@@ -39,7 +39,7 @@ public class TokenService {
 
         refreshTokenRepositoryFromAPIIfNeccessary();
         Assert.state(_tokenRepository.count() == 1, "There should always be only 1 token at this point.");
-        Iterator<Token> i = _tokenRepository.findAll().iterator();
+        Iterator<TokenEntity> i = _tokenRepository.findAll().iterator();
         if (i.hasNext()) {
             _token = i.next();    
         }
@@ -47,12 +47,12 @@ public class TokenService {
 
     private void refreshTokenRepositoryFromAPIIfNeccessary() {
         Assert.state(_tokenRepository.count() <= 1, "There should always be at most 1 token in the database.");
-        Iterator<Token> i = _tokenRepository.findAll().iterator();
+        Iterator<TokenEntity> i = _tokenRepository.findAll().iterator();
 
         String refreshToken = null;
 
         if (i.hasNext()) {
-            Token token = i.next();
+            TokenEntity token = i.next();
             if (new Date().getTime() < token.getExpiresBy()) {
                 return;    
             }
@@ -68,7 +68,7 @@ public class TokenService {
             return;
         }
 
-        _token = new Token();
+        _token = new TokenEntity();
         _token.setAccessToken(response.getAccessToken());
         _token.setTokenType(response.getTokenType());
         _token.setExpiresBy(new Date().getTime() + response.getExpiresIn() * 1000);

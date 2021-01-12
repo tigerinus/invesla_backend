@@ -8,15 +8,15 @@ import com.tensorsmart.invesla.questrade.connector.response.TokenResponse;
 import com.tensorsmart.invesla.questrade.repository.TokenRepository;
 import com.tensorsmart.invesla.questrade.repository.entity.TokenEntity;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class TokenService {
-    final static Logger LOG = LoggerFactory.getLogger(TokenService.class);
 
     volatile TokenEntity _token;
     
@@ -64,7 +64,7 @@ public class TokenService {
         TokenResponse response = _connector.getToken(refreshToken);
 
         if (null == response) {
-            LOG.error("unable to obtain new token from API");
+            log.error("unable to obtain new token from API");
             return;
         }
 

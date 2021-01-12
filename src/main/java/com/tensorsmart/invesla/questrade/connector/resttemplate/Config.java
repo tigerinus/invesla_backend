@@ -18,17 +18,16 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-@Configuration
-public class Config {
+import lombok.extern.slf4j.Slf4j;
 
-    final static Logger LOG = LoggerFactory.getLogger(Config.class);
+@Configuration
+@Slf4j
+public class Config {
 
     @Bean
 	public RestTemplate restTemplateWithoutHeader() {
@@ -54,7 +53,7 @@ public class Config {
                 .loadTrustMaterial(null, acceptingTrustStrategy)
                 .build();
         } catch (NoSuchAlgorithmException | KeyStoreException | KeyManagementException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return;
         }
 
@@ -73,7 +72,7 @@ public class Config {
         InputStream keyStoreInputStream = classLoader.getResourceAsStream(keyStoreName);
 
         if (keyStoreInputStream == null) {
-            LOG.error("Cannot find {}", keyStoreName);
+            log.error("Cannot find {}", keyStoreName);
         }
 
         KeyStore keystore;
@@ -81,7 +80,7 @@ public class Config {
         try {
             keystore = KeyStore.getInstance(KeyStore.getDefaultType());
         } catch (GeneralSecurityException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return;
         }
 
@@ -90,21 +89,21 @@ public class Config {
         try {
             keystore.load(keyStoreInputStream, null);            
         } catch (IOException | NoSuchAlgorithmException | CertificateException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return;
         }
 
         try {
             trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         } catch (NoSuchAlgorithmException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return;
         }
 
         try {
             trustManagerFactory.init(keystore);
         } catch (KeyStoreException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return;
         }
 
@@ -115,14 +114,14 @@ public class Config {
         try {
             sc = SSLContext.getInstance("SSL");
         } catch (NoSuchAlgorithmException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return;
         }
 
         try {
             sc.init(null, trustManagers, null);
         } catch (KeyManagementException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return;
         }
 

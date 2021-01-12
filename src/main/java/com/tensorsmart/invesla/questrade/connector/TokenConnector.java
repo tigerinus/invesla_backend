@@ -2,8 +2,6 @@ package com.tensorsmart.invesla.questrade.connector;
 
 import com.tensorsmart.invesla.questrade.connector.response.TokenResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,11 +10,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class TokenConnector {
     
-    final static Logger LOG = LoggerFactory.getLogger(TokenConnector.class);
-
     String _url;
     String _refreshToken;
 
@@ -36,16 +35,16 @@ public class TokenConnector {
 
         ResponseEntity<TokenResponse> response = null;
         try {
-            LOG.info("Calling {}...", _url);
+            log.info("Calling {}...", _url);
             String fullUrl = _url + _refreshToken;
             response = restTemplate.getForEntity(fullUrl, TokenResponse.class);
         } catch (HttpClientErrorException e) {
-            LOG.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return null;
         }
 
         if (!response.getStatusCode().is2xxSuccessful()) {
-            LOG.error("Refresh token failed. Status code: {}", response.getStatusCode());
+            log.error("Refresh token failed. Status code: {}", response.getStatusCode());
             return null;
         }
 

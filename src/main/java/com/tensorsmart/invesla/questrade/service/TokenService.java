@@ -18,7 +18,7 @@ import org.springframework.util.Assert;
 public class TokenService {
     final static Logger LOG = LoggerFactory.getLogger(TokenService.class);
 
-    Token _token;
+    volatile Token _token;
     
     @Autowired
     TokenConnector _connector;

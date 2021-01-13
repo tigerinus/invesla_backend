@@ -17,7 +17,7 @@ public class TokenServiceTest {
     TokenService _service;
 
     @Test
-    public void GetTokenTest() {
+    public void getTokenTest() {
         TokenEntity token = _service.getToken();
 
         assertNotNull(token);

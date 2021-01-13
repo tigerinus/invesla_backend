@@ -21,7 +21,7 @@ public class TokenConnector {
 
     @Autowired
     @Qualifier("restTemplateWithoutHeader")
-    RestTemplate restTemplate;
+    RestTemplate _restTemplate;
 
     public TokenConnector(@Value("${qt.login.url}") String url, @Value("${qt.token.key}") String manualRefreshToken) {
         _url = url;
@@ -35,9 +35,8 @@ public class TokenConnector {
 
         ResponseEntity<TokenResponse> response = null;
         try {
-            log.info("Calling {}...", _url);
             String fullUrl = _url + _refreshToken;
-            response = restTemplate.getForEntity(fullUrl, TokenResponse.class);
+            response = _restTemplate.getForEntity(fullUrl, TokenResponse.class);
         } catch (HttpClientErrorException e) {
             log.error(e.getMessage(), e);
             return null;

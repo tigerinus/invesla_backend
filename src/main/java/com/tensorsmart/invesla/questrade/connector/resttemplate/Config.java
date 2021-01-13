@@ -14,10 +14,14 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
+import com.tensorsmart.invesla.questrade.connector.resttemplate.interceptor.TokenInterceptor;
+import com.tensorsmart.invesla.questrade.connector.resttemplate.interceptor.LoggingInterceptor;
+
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -29,16 +33,28 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Config {
 
+    @Autowired
+    LoggingInterceptor _loggingInterceptor;
+
+    @Autowired
+    TokenInterceptor _tokenInterceptor;
+
     @Bean
 	public RestTemplate restTemplateWithoutHeader() {
         RestTemplate restTemplate = new RestTemplate();
+
+        restTemplate.getInterceptors().add(_loggingInterceptor);
 
         return restTemplate;
     }
 
     @Bean
     public RestTemplate restTemplateWithHeader() {
+
         RestTemplate restTemplate = new RestTemplate();
+
+        restTemplate.getInterceptors().add(_tokenInterceptor);
+        restTemplate.getInterceptors().add(_loggingInterceptor);
 
         return restTemplate;
     }

@@ -13,10 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class SymbolServiceTest {
     @Autowired
-    SymbolService _service;
+    private SymbolService _service;
 
     @Test
-    public void searchSymbolsTest() {
+    public void getSymbolTest() {
         SymbolResponse response = _service.getSymbol("AI");
 
         assertNotNull(response);

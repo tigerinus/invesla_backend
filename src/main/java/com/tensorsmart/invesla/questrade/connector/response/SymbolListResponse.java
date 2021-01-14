@@ -5,6 +5,8 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class SymbolSearchResponse {
-    List<SymbolResponse> symbols;
+public class SymbolListResponse {
+
+    private List<SymbolResponse> symbols;
+
 }

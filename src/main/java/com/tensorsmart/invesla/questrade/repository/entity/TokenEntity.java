@@ -13,13 +13,13 @@ import lombok.Setter;
 @Setter
 public class TokenEntity {
     @Id
-    String accessToken;
+    private String accessToken;
 
-    String tokenType;
+    private String tokenType;
 
-    long expiresBy = 0;
+    private long expiresBy = 0;
 
-    String refreshToken;
+    private String refreshToken;
 
-    String apiServer;
+    private String apiServer;
 }

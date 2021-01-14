@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.tensorsmart.invesla.questrade.connector.SymbolsConnector;
 import com.tensorsmart.invesla.questrade.connector.response.SymbolResponse;
-import com.tensorsmart.invesla.questrade.connector.response.SymbolSearchResponse;
+import com.tensorsmart.invesla.questrade.connector.response.SymbolListResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 public class SymbolService {
 
     @Autowired
-    SymbolsConnector _connector;
+    private SymbolsConnector _connector;
 
     public SymbolResponse getSymbol(String symbol) {
-        SymbolSearchResponse response = _connector.searchSymbols(symbol);
+        SymbolListResponse response = _connector.searchSymbols(symbol);
 
         List<SymbolResponse> list = response.getSymbols();
 

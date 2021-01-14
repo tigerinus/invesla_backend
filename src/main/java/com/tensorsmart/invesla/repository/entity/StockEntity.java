@@ -13,13 +13,9 @@ import lombok.Setter;
 @Setter
 public class StockEntity {
     @Id
-    String symbolId;
-
-    String symbol;
-
-    String description;
-
-    String listingExchange;
-
-    String currency;
+    private String symbolId;
+    private String symbol;
+    private String description;
+    private String listingExchange;
+    private String currency;
 }

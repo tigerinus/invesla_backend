@@ -7,17 +7,17 @@ import lombok.Getter;
 @Getter
 public class TokenResponse {
     @JsonProperty("access_token")
-    String accessToken;
+    private String accessToken;
 
     @JsonProperty("token_type")
-    String tokenType;
-
+    private String tokenType;
+ 
     @JsonProperty("expires_in")
-    int expiresIn;
+    private int expiresIn;
 
     @JsonProperty("refresh_token")
-    String refreshToken;
+    private String refreshToken;
 
     @JsonProperty("api_server")
-    String apiServer;
+    private String apiServer;
 }

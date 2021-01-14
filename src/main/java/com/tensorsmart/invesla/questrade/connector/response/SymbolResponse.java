@@ -5,12 +5,13 @@ import lombok.Getter;
 @Getter
 public class SymbolResponse {
 
-    String symbol;
-    String symbolId;
-    String description;
-    String securityType;
-    String listingExchange;
-    boolean isTradable;
-    boolean isQuotable;
-    String currency;
+    private String symbol;
+    private String symbolId;
+    private String description;
+    private String securityType;
+    private String listingExchange;
+    private boolean isTradable;
+    private boolean isQuotable;
+    private String currency;
+
 }

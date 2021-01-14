@@ -1,6 +1,6 @@
 package com.tensorsmart.invesla.questrade.connector;
 
-import com.tensorsmart.invesla.questrade.connector.response.SymbolSearchResponse;
+import com.tensorsmart.invesla.questrade.connector.response.SymbolListResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,14 +14,14 @@ public class SymbolsConnector {
 
     @Autowired
     @Qualifier("restTemplateWithHeader")
-    RestTemplate _restTemplate;
+    private RestTemplate _restTemplate;
 
-    public SymbolSearchResponse searchSymbols(String prefix) {
+    public SymbolListResponse searchSymbols(String prefix) {
         Assert.notNull(prefix, "prefix should not be null");
         Assert.hasLength(prefix, "prefix should not be empty");
 
-        ResponseEntity<SymbolSearchResponse> response = _restTemplate.getForEntity("v1/symbols/search?prefix=" + prefix,
-                SymbolSearchResponse.class);
+        ResponseEntity<SymbolListResponse> response = _restTemplate.getForEntity("v1/symbols/search?prefix=" + prefix,
+                SymbolListResponse.class);
 
         return response.getBody();
     }

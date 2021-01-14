@@ -20,7 +20,7 @@ import org.springframework.util.StringUtils;
 public class TokenInterceptor implements ClientHttpRequestInterceptor {
 
     @Autowired
-    TokenService _tokenService;
+    private TokenService _tokenService;
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)

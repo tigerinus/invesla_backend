@@ -16,12 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TokenConnector {
     
-    String _url;
-    String _refreshToken;
+    private String _url;
+    private String _refreshToken;
 
     @Autowired
     @Qualifier("restTemplateWithoutHeader")
-    RestTemplate _restTemplate;
+    private RestTemplate _restTemplate;
 
     public TokenConnector(@Value("${qt.login.url}") String url, @Value("${qt.token.key}") String manualRefreshToken) {
         _url = url;

@@ -34,10 +34,10 @@ import lombok.extern.slf4j.Slf4j;
 public class Config {
 
     @Autowired
-    LoggingInterceptor _loggingInterceptor;
+    private LoggingInterceptor _loggingInterceptor;
 
     @Autowired
-    TokenInterceptor _tokenInterceptor;
+    private TokenInterceptor _tokenInterceptor;
 
     @Bean
 	public RestTemplate restTemplateWithoutHeader() {

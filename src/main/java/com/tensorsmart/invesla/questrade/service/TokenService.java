@@ -21,10 +21,10 @@ public class TokenService {
     volatile TokenEntity _token;
     
     @Autowired
-    TokenConnector _connector;
+    private TokenConnector _connector;
 
     @Autowired
-    TokenRepository _tokenRepository;
+    private TokenRepository _tokenRepository;
 
     public TokenEntity getToken() {
         refreshTokenFromRepositoryIfNeccessary();

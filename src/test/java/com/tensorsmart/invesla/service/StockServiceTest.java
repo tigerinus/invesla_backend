@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.tensorsmart.invesla.repository.entity.StockEntity;
-
 import org.junit.jupiter.api.Test;
+import org.openapitools.model.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -27,7 +26,7 @@ public class StockServiceTest {
         symbols.forEach(_service::deleteStock);
 
         // verify
-        for (StockEntity stock : _service.getStocks()) {
+        for (Stock stock : _service.getStocks()) {
             if (symbols.contains(stock.getSymbol())) {
                 fail("Symbols should not exist.");
             }
@@ -38,7 +37,7 @@ public class StockServiceTest {
 
         // verify
         List<String> actualSymbols = new ArrayList<String>();
-        for (StockEntity stock : _service.getStocks()) {
+        for (Stock stock : _service.getStocks()) {
             actualSymbols.add(stock.getSymbol());
         }
 
@@ -49,7 +48,7 @@ public class StockServiceTest {
         symbols.forEach(_service::deleteStock);
 
         // verify
-        for (StockEntity stock : _service.getStocks()) {
+        for (Stock stock : _service.getStocks()) {
             if (symbols.contains(stock.getSymbol())) {
                 fail("Symbols should not exist.");
             }

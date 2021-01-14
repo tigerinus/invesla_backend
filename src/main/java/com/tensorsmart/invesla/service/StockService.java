@@ -1,14 +1,14 @@
 package com.tensorsmart.invesla.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
 
 import com.tensorsmart.invesla.questrade.service.SymbolService;
 import com.tensorsmart.invesla.repository.StockRepository;
 import com.tensorsmart.invesla.repository.entity.StockEntity;
 
+import org.openapitools.model.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +21,15 @@ public class StockService {
     @Autowired
     private SymbolService _symbolService;
 
-    public Iterable<StockEntity> getStocks() {
-        return _repository.findAll();
+    public List<Stock> getStocks() {
+
+        List<Stock> result = new ArrayList<Stock>();
+        for (StockEntity stockEntity : _repository.findAll()) {
+            Stock stock = new Stock();
+            stock.setSymbol(stockEntity.getSymbol());
+        }
+
+        return result;
     }
 
     public void addStocks(List<String> symbols) {
@@ -55,7 +62,6 @@ public class StockService {
         _repository.saveAll(newStocks);
     }
 
-    @Transactional
     public void deleteStock(String symbol) {
         _repository.deleteBySymbol(symbol);
     }

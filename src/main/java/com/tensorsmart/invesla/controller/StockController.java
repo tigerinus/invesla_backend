@@ -1,9 +1,7 @@
 package com.tensorsmart.invesla.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.tensorsmart.invesla.repository.entity.StockEntity;
 import com.tensorsmart.invesla.service.StockService;
 
 import org.openapitools.api.StocksApi;
@@ -22,14 +20,7 @@ public class StockController implements StocksApi {
 
     @Override
     public ResponseEntity<List<Stock>> getStocks() {
-        List<Stock> result = new ArrayList<Stock>();
-        Iterable<StockEntity> stocks = _service.getStocks();
-
-        for (StockEntity stockEntity : stocks) {
-            Stock stock = new Stock();
-            stock.setSymbol(stockEntity.getSymbol());
-        }
-
+        List<Stock> result = _service.getStocks();
         return ResponseEntity.ok(result);
     }
 

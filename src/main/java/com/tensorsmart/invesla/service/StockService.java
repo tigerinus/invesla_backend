@@ -27,6 +27,7 @@ public class StockService {
         for (StockEntity stockEntity : _repository.findAll()) {
             Stock stock = new Stock();
             stock.setSymbol(stockEntity.getSymbol());
+            result.add(stock);
         }
 
         return result;

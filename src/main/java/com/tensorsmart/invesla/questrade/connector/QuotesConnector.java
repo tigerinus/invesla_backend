@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -19,8 +18,9 @@ public class QuotesConnector {
     private RestTemplate _restTemplate;
 
     public QuoteListResponse getQuotes(List<String> symbolIdList) {
-        Assert.notNull(symbolIdList, "symbolIdList should not be null");
-        Assert.notEmpty(symbolIdList, "symbolIdList should not be empty");
+        if (symbolIdList == null || symbolIdList.size() == 0) {
+            return new QuoteListResponse();
+        }
 
         String ids = String.join(",", symbolIdList);
 

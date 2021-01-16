@@ -67,4 +67,7 @@ components:
       properties:
         symbol:
           type: string
-          example: EMQQ
+          example: ARKG
+        symbolId:
+          type: string
+          example: "7956433"

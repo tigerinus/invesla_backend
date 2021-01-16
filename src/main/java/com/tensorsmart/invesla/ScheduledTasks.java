@@ -11,20 +11,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
 public class ScheduledTasks {
 
-    @Autowired
-    StockService _stockService;
+    @Setter
+    private static boolean DEBUG = false;
 
     @Autowired
-    QuoteService _quoteService;
+    private StockService _stockService;
+
+    @Autowired
+    private QuoteService _quoteService;
 
     @Scheduled(fixedDelay = 1000, initialDelay = 5000)
     public void refreshQuotes() {
+        if (ScheduledTasks.DEBUG) {
+            return;
+        }
+
         log.info("refreshing quotes...");
 
         List<String> symbolIdList = new ArrayList<String>();

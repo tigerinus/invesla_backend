@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "qt.token.key",
+    "type": "java.lang.String",
+    "description": "refresh token for Questrade token API"
+  },
+  {
+    "name": "qt.login.url",
+    "type": "java.lang.String",
+    "description": "login URL for Questrade token API"
+  },
+  {
+    "name": "spring.token-datasource.url",
+    "type": "java.lang.String",
+    "description": "datasource URL for persisting Questrade token'"
+  },
+  {
+    "name": "spring.token-datasource.username",
+    "type": "java.lang.String",
+    "description": "datasource username for persisting Questrade token"
+  },
+  {
+    "name": "spring.token-datasource.password",
+    "type": "java.lang.String",
+    "description": "datasource password for persisting Questrade token"
+  }
+]}

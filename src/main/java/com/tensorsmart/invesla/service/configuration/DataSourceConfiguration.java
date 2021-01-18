@@ -7,6 +7,7 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -14,6 +15,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 // This class is needed to allow secondary data source(s) defined somewhere else
 // without hijacking the default data source.
 @Configuration
+@EnableJpaRepositories(
+    basePackages = {"com.tensorsmart.invesla.repository"}
+)
 public class DataSourceConfiguration {
 
     @Bean
@@ -33,9 +37,7 @@ public class DataSourceConfiguration {
     @Primary
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder) {
         LocalContainerEntityManagerFactoryBean entityManager = builder.dataSource(primaryDataSource())
-                .packages(new String[] { "com.tensorsmart.invesla.repository.entity",
-                        "com.tensorsmart.invesla.questrade.repository.entity" })
-                .build();
+                .packages(new String[] { "com.tensorsmart.invesla.repository.entity" }).build();
 
         return entityManager;
     }

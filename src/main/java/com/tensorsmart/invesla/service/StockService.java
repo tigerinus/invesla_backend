@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import com.tensorsmart.invesla.questrade.service.SymbolService;
 import com.tensorsmart.invesla.repository.StockRepository;
 import com.tensorsmart.invesla.repository.entity.StockEntity;
+import com.tensorsmart.invesla.service.factory.StockEntityFactory;
+import com.tensorsmart.invesla.service.wrapper.StockWrapper;
 
 import org.openapitools.model.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +27,7 @@ public class StockService {
 
         List<Stock> result = new ArrayList<Stock>();
         for (StockEntity stockEntity : _repository.findAll()) {
-            Stock stock = new Stock();
-            stock.setSymbol(stockEntity.getSymbol());
-            result.add(stock);
+            result.add(new StockWrapper(stockEntity));
         }
 
         return result;
@@ -40,7 +40,7 @@ public class StockService {
         }
 
         List<StockEntity> existingStocks = _repository.findAllBySymbolIn(symbols);
-        
+
         List<String> existingSymbols = existingStocks.stream().map(stock -> stock.getSymbol())
                 .collect(Collectors.toList());
 
@@ -50,15 +50,8 @@ public class StockService {
             return;
         }
 
-        List<StockEntity> newStocks = symbols.stream().map(symbol -> _symbolService.getSymbol(symbol)).map(symbolResponse -> {
-            StockEntity stock = new StockEntity();
-            stock.setSymbolId(symbolResponse.getSymbolId());
-            stock.setSymbol(symbolResponse.getSymbol());
-            stock.setDescription(symbolResponse.getDescription());
-            stock.setCurrency(symbolResponse.getCurrency());
-            stock.setListingExchange(symbolResponse.getListingExchange());
-            return stock;
-        }).collect(Collectors.toList());
+        List<StockEntity> newStocks = symbols.stream().map(symbol -> _symbolService.getSymbol(symbol))
+                .map(symbolResponse -> StockEntityFactory.get(symbolResponse)).collect(Collectors.toList());
 
         _repository.saveAll(newStocks);
     }

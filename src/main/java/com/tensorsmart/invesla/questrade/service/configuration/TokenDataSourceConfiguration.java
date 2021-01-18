@@ -13,12 +13,10 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration()
-@EnableJpaRepositories(
-    basePackages = {"com.tensorsmart.invesla.questrade.repository"},
-    entityManagerFactoryRef = "tokenEntityManagerFactory",
-    transactionManagerRef = "tokenTransactionManager"
-)
+@EnableJpaRepositories(basePackages = {
+        "com.tensorsmart.invesla.questrade.repository" }, entityManagerFactoryRef = "tokenEntityManagerFactory", transactionManagerRef = "tokenTransactionManager")
 public class TokenDataSourceConfiguration {
+
     @Bean
     @ConfigurationProperties("spring.token-datasource")
     public DataSourceProperties tokenDataSourceProperties() {
@@ -34,6 +32,7 @@ public class TokenDataSourceConfiguration {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean tokenEntityManagerFactory(EntityManagerFactoryBuilder builder) {
+
         LocalContainerEntityManagerFactoryBean entityManager = builder.dataSource(tokenDataSource())
                 .packages(new String[] { "com.tensorsmart.invesla.questrade.repository.entity" }).build();
 

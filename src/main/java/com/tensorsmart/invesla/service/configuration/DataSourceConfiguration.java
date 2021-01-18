@@ -15,9 +15,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 // This class is needed to allow secondary data source(s) defined somewhere else
 // without hijacking the default data source.
 @Configuration
-@EnableJpaRepositories(
-    basePackages = {"com.tensorsmart.invesla.repository"}
-)
+@EnableJpaRepositories(basePackages = { "com.tensorsmart.invesla.repository" })
 public class DataSourceConfiguration {
 
     @Bean

@@ -51,6 +51,7 @@ public class StockService {
         }
 
         List<StockEntity> newStocks = symbols.stream().map(symbol -> _symbolService.getSymbol(symbol))
+                .filter(symbolResponse -> symbolResponse != null)
                 .map(symbolResponse -> StockEntityFactory.get(symbolResponse)).collect(Collectors.toList());
 
         _repository.saveAll(newStocks);

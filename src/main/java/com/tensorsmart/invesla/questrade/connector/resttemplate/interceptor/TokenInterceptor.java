@@ -30,8 +30,8 @@ public class TokenInterceptor implements ClientHttpRequestInterceptor {
     
     private class UriOverrideWrapper extends HttpRequestWrapper {
 
-        final URI _uri;
-        final TokenEntity _token;
+        private final URI _uri;
+        private final TokenEntity _token;
 
         public UriOverrideWrapper(HttpRequest request) {
             super(request);

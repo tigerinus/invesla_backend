@@ -6,7 +6,7 @@ info:
   contact:
     name: tiger
 servers:
-  - url: http://localhost
+  - url: http://localhost:8080
 tags:
   - name: stocks
 paths:

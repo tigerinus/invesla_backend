@@ -24,6 +24,8 @@ public class QuoteUpdateService {
     public void updateQuotes(List<String> symbolIdList) {
         List<QuoteResponse> quoteResponseList = _quoteService.getQuotes(symbolIdList);
 
+        if (quoteResponseList.size() == 0) return;
+
         List<QuoteEntity> quoteEntityList = quoteResponseList.stream().map(response -> QuoteEntityFactory.get(response))
                 .collect(Collectors.toList());
 

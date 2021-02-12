@@ -3,7 +3,11 @@ package com.tensorsmart.invesla.questrade.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.tensorsmart.invesla.ScheduledTasks;
+import com.tensorsmart.invesla.questrade.connector.response.SymbolDetailResponse;
 import com.tensorsmart.invesla.questrade.connector.response.SymbolResponse;
 
 import org.junit.jupiter.api.Test;
@@ -21,10 +25,25 @@ public class SymbolServiceTest {
     private ScheduledTasks _dummyScheduledTasks;
 
     @Test
-    public void getSymbolTest() {
-        SymbolResponse response = _service.getSymbol("AI");
+    public void getSymbolByNameTest() {
+        SymbolResponse response = _service.getSymbolByName("AI");
 
         assertNotNull(response);
         assertEquals(response.getSymbol(), "AI");
+    }
+
+    @Test
+    public void getSymbolByIdTest() {
+        List<String> ids = new ArrayList<String>();
+        ids.add("8049");
+
+        List<SymbolDetailResponse> symbolList = _service.getSymbolDetailByIds(ids);
+        
+        assertNotNull(symbolList);
+        assertEquals(ids.size(), symbolList.size());
+
+        SymbolDetailResponse symbolDetail = symbolList.get(0);
+
+        assertEquals("AAPL", symbolDetail.getSymbol());
     }
 }

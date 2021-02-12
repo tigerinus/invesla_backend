@@ -50,7 +50,7 @@ public class StockService {
             return;
         }
 
-        List<StockEntity> newStocks = symbols.stream().map(symbol -> _symbolService.getSymbol(symbol))
+        List<StockEntity> newStocks = symbols.stream().map(symbol -> _symbolService.getSymbolByName(symbol))
                 .filter(symbolResponse -> symbolResponse != null)
                 .map(symbolResponse -> StockEntityFactory.get(symbolResponse)).collect(Collectors.toList());
 

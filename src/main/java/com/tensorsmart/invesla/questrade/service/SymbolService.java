@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.tensorsmart.invesla.questrade.connector.SymbolsConnector;
 import com.tensorsmart.invesla.questrade.connector.response.SymbolResponse;
+import com.tensorsmart.invesla.questrade.connector.response.SymbolDetailListResponse;
+import com.tensorsmart.invesla.questrade.connector.response.SymbolDetailResponse;
 import com.tensorsmart.invesla.questrade.connector.response.SymbolListResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ public class SymbolService {
     @Autowired
     private SymbolsConnector _connector;
 
-    public SymbolResponse getSymbol(String symbol) {
+    public SymbolResponse getSymbolByName(String symbol) {
         SymbolListResponse response = _connector.searchSymbols(symbol);
 
         List<SymbolResponse> list = response.getSymbols();
@@ -27,5 +29,17 @@ public class SymbolService {
         }
 
         return null;
+    }
+
+    public List<SymbolDetailResponse> getSymbolDetailByIds(List<String> ids) {
+        for (String id : ids) {
+            if (id.isEmpty()) {
+                throw new IllegalArgumentException("ids");
+            }
+        }
+
+        SymbolDetailListResponse response = _connector.getSymbols(ids);
+
+        return response.getSymbols();
     }
 }

@@ -1,5 +1,8 @@
 package com.tensorsmart.invesla.questrade.connector;
 
+import java.util.List;
+
+import com.tensorsmart.invesla.questrade.connector.response.SymbolDetailListResponse;
 import com.tensorsmart.invesla.questrade.connector.response.SymbolListResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,15 @@ public class SymbolsConnector {
 
         ResponseEntity<SymbolListResponse> response = _restTemplate.getForEntity("v1/symbols/search?prefix=" + prefix,
                 SymbolListResponse.class);
+
+        return response.getBody();
+    }
+
+    public SymbolDetailListResponse getSymbols(List<String> ids) {
+        Assert.notNull(ids, "ids should not be null");
+        Assert.notEmpty(ids, "ids should not be empty");
+
+        ResponseEntity<SymbolDetailListResponse> response = _restTemplate.getForEntity("v1/symbols?ids=" + String.join(",", ids), SymbolDetailListResponse.class);
 
         return response.getBody();
     }

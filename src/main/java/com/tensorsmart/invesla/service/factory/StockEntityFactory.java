@@ -12,7 +12,7 @@ public class StockEntityFactory {
         stockEntity.setSymbol(symbolResponse.getSymbol());
         stockEntity.setSymbolId(symbolResponse.getSymbolId());
         stockEntity.setDescription(symbolResponse.getDescription());
-        stockEntity.setListingExchange(symbolResponse.getListingExchange());
+        stockEntity.setListingExchange(symbolResponse.getListingExchange().toString());
         stockEntity.setCurrency(symbolResponse.getCurrency());
         return stockEntity;
     }

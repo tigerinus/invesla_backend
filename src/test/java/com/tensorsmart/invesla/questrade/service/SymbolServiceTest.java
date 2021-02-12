@@ -1,11 +1,10 @@
-package com.tensorsmart.invesla.questrade;
+package com.tensorsmart.invesla.questrade.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.tensorsmart.invesla.ScheduledTasks;
 import com.tensorsmart.invesla.questrade.connector.response.SymbolResponse;
-import com.tensorsmart.invesla.questrade.service.SymbolService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

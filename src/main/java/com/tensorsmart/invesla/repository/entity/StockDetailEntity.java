@@ -1,5 +1,6 @@
 package com.tensorsmart.invesla.repository.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -66,18 +67,25 @@ public class StockDetailEntity {
     @Column(name = "dividend_date")
     private Date dividendDate;
 
-    public class StockDetailId {
-        private String _dateStamp;
-        private String _symbolId;
+    public static class StockDetailId implements Serializable{
+        
+        private static final long serialVersionUID = 5117797463531699904L;
+
+        private String dateStamp;
+        private String symbolId;
+
+        public StockDetailId() {
+            
+        }
 
         public StockDetailId(String dateStamp, String symbolId) {
-            _dateStamp = dateStamp;
-            _symbolId = symbolId;
+            this.dateStamp = dateStamp;
+            this.symbolId = symbolId;
         }
 
         @Override
         public int hashCode() {
-            return (_dateStamp + _symbolId).hashCode();
+            return (this.dateStamp + this.symbolId).hashCode();
         }
     }
 }

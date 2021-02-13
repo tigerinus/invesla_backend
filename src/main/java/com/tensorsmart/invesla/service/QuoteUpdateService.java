@@ -22,6 +22,8 @@ public class QuoteUpdateService {
     QuoteRepository _repository;
 
     public void updateQuotes(List<String> symbolIdList) {
+        if (symbolIdList.isEmpty()) return;
+
         List<QuoteResponse> quoteResponseList = _quoteService.getQuotes(symbolIdList);
 
         if (quoteResponseList.size() == 0) return;

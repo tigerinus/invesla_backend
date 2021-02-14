@@ -11,15 +11,12 @@ public class SymbolResponse {
     private String symbolId;
     private String description;
     private SecurityType securityType;
-    private ListingExchange listingExchange;
+
+    
+    private String listingExchange;
     private Boolean isTradable;
     private Boolean isQuotable;
     private String currency;
-
-    
-    public enum ListingExchange {
-        TSX, TSXV, CNSX, MX, NASDAQ, NYSE, NYSEAM, ARCA, OPRA, OTCBB, PINX, BATS
-    }
 
     public enum SecurityType {
         @JsonProperty("Stock")

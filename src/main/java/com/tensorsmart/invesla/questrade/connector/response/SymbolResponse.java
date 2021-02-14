@@ -18,7 +18,7 @@ public class SymbolResponse {
 
     
     public enum ListingExchange {
-        TSX, TSXV, CNSX, MX, NASDAQ, NYSE, NYSEAM, ARCA, OPRA, OTCBB, PINX
+        TSX, TSXV, CNSX, MX, NASDAQ, NYSE, NYSEAM, ARCA, OPRA, OTCBB, PINX, BATS
     }
 
     public enum SecurityType {

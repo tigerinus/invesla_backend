@@ -42,10 +42,29 @@ public class StockUpdateService {
     }
 
     private static StockDetailEntity stamp(StockDetailEntity stockDetail) {
-        String dateStamp = LocalDateTime.now().atZone(ZoneId.of(ZONE)).format(DateTimeFormatter.BASIC_ISO_DATE);
+        String dateStamp = getLastWorkDateTime().atZone(ZoneId.of(ZONE)).format(DateTimeFormatter.BASIC_ISO_DATE);
 
         stockDetail.setDateStamp(dateStamp);
 
         return stockDetail;
+    }
+
+    private static LocalDateTime getLastWorkDateTime() {
+        LocalDateTime now = LocalDateTime.now();
+
+        LocalDateTime lastWorkDateTime;
+
+        switch(now.getDayOfWeek()) {
+            case MONDAY:
+                lastWorkDateTime = now.minusDays(3);
+                break;
+            case SUNDAY:
+                lastWorkDateTime = now.minusDays(2);
+                break;
+            default:
+                lastWorkDateTime = now.minusDays(1);
+        }
+
+        return lastWorkDateTime;
     }
 }

@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: token
+  version: 0.0.1
+  description: token
+  contact:
+    name: tiger
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: token
+paths:
+  /token:
+    get:
+      operationId: get_token
+      tags:
+        - token
+      description: get token
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+    post:
+      operationId: refresh_token
+      tags:
+        - token
+      description: refresh token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TokenRequest"
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    TokenRequest:
+      required:
+        - refresh_token
+      properties:
+        refresh_token:
+          type: string
+          example: Ab60DAFgT2ZPol-RLuuZNOrKWxLoECiK0
+    TokenResponse:
+      properties:
+        expires_by:
+          type: string

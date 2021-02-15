@@ -9,6 +9,7 @@ import com.tensorsmart.invesla.questrade.repository.TokenRepository;
 import com.tensorsmart.invesla.questrade.repository.entity.TokenEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
@@ -26,10 +27,30 @@ public class TokenService {
     @Autowired
     private TokenRepository _tokenRepository;
 
+    @Value("${qt.token.key}")
+    private String _manualRefreshToken;
+
     public TokenEntity getToken() {
         refreshTokenFromRepositoryIfNeccessary();
         Assert.notNull(_token, "token should not be null at this point.");
         return _token;
+    }
+
+    public void refreshTokenRepositoryFromAPI(String refreshToken) {
+        // obtain from API
+        TokenResponse response = _connector.getToken(refreshToken);
+
+        if (null == response) return;
+
+        _token = new TokenEntity();
+        _token.setAccessToken(response.getAccessToken());
+        _token.setTokenType(response.getTokenType());
+        _token.setExpiresBy(new Date().getTime() + response.getExpiresIn() * 1000);
+        _token.setRefreshToken(response.getRefreshToken());
+        _token.setApiServer(response.getApiServer());
+
+        _tokenRepository.deleteAll();
+        _tokenRepository.save(_token);
     }
 
     private void refreshTokenFromRepositoryIfNeccessary() {
@@ -60,23 +81,12 @@ public class TokenService {
             refreshToken = token.getRefreshToken();
         }
 
-        // obtain from API
-        TokenResponse response = _connector.getToken(refreshToken);
-
-        if (null == response) {
-            log.error("unable to obtain new token from API");
-            return;
+        if (refreshToken == null) {
+            log.info("no refreshToken found from repository, using refreshToken from environment variable.");
+            refreshToken = _manualRefreshToken;
         }
 
-        _token = new TokenEntity();
-        _token.setAccessToken(response.getAccessToken());
-        _token.setTokenType(response.getTokenType());
-        _token.setExpiresBy(new Date().getTime() + response.getExpiresIn() * 1000);
-        _token.setRefreshToken(response.getRefreshToken());
-        _token.setApiServer(response.getApiServer());
-
-        _tokenRepository.deleteAll();
-        _tokenRepository.save(_token);
+        refreshTokenRepositoryFromAPI(refreshToken);
     }
 
 }

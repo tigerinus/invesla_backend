@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,27 +17,24 @@ import lombok.extern.slf4j.Slf4j;
 public class TokenConnector {
     
     private String _url;
-    private String _refreshToken;
 
     @Autowired
     @Qualifier("restTemplateWithoutHeader")
     private RestTemplate _restTemplate;
 
-    public TokenConnector(@Value("${qt.login.url}") String url, @Value("${qt.token.key}") String manualRefreshToken) {
+    public TokenConnector(@Value("${qt.login.url}") String url) {
         _url = url;
-        _refreshToken = manualRefreshToken;
     }
 
     public TokenResponse getToken(String refreshToken) {
-        if (null != refreshToken && !refreshToken.trim().isEmpty()) {
-            _refreshToken = refreshToken;
-        }
+        if (refreshToken == null || refreshToken.isEmpty()) return null;
 
-        ResponseEntity<TokenResponse> response = null;
+        String fullUrl = _url + refreshToken;
+
+        ResponseEntity<TokenResponse> response;
         try {
-            String fullUrl = _url + _refreshToken;
             response = _restTemplate.getForEntity(fullUrl, TokenResponse.class);
-        } catch (HttpClientErrorException e) {
+        } catch (RestClientException e) {
             log.error(e.getMessage(), e);
             return null;
         }

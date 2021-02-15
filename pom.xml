@@ -151,11 +151,26 @@
 				<version>5.0.0</version>
 				<executions>
 					<execution>
+						<id>1</id>
 						<goals>
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>${project.basedir}/api/stocks.api.yaml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/java/com/tensorsmart/invesla/controller/api/stocks.api.yaml</inputSpec>
+							<generatorName>spring</generatorName>
+							<configOptions>
+								<sourceFolder>src/gen/java/main</sourceFolder>
+								<interfaceOnly>true</interfaceOnly>
+							</configOptions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>2</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>${project.basedir}/src/main/java/com/tensorsmart/invesla/questrade/controller/api/token.api.yaml</inputSpec>
 							<generatorName>spring</generatorName>
 							<configOptions>
 								<sourceFolder>src/gen/java/main</sourceFolder>

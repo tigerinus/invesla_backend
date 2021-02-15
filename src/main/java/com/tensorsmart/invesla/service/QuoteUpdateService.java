@@ -57,9 +57,19 @@ public class QuoteUpdateService {
     private boolean isSymbolStillTrading(String id) {
         Stock stock = _stockManagementService.getStockById(id);
 
+        if (stock == null) {
+            log.error("unable to get stock info for id '{}', assuming the stock is still trading.", id);
+            return true;
+        }
+
         String marketName = stock.getMarket();
 
         MarketResponse market = _marketService.getMarket(marketName);
+
+        if (market == null) {
+            log.warn("unable to get market information for '{}', assuming the stock is still trading.", marketName);
+            return true;
+        }
 
         Date now = new Date();
 

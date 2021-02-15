@@ -1,10 +1,8 @@
 package com.tensorsmart.invesla.questrade.connector;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.tensorsmart.invesla.questrade.connector.response.QuoteListResponse;
-import com.tensorsmart.invesla.questrade.connector.response.QuoteResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,11 +18,7 @@ public class QuotesConnector {
     private RestTemplate _restTemplate;
 
     public QuoteListResponse getQuotes(List<String> symbolIdList) {
-        if (symbolIdList == null || symbolIdList.size() == 0) {
-            QuoteListResponse response = new QuoteListResponse();
-            response.setQuotes(Arrays.asList(new QuoteResponse[] {}));
-            return response;
-        }
+        if (symbolIdList == null || symbolIdList.isEmpty()) return null;
 
         String ids = String.join(",", symbolIdList);
 

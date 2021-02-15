@@ -71,3 +71,6 @@ components:
         symbolId:
           type: string
           example: "7956433"
+        market:
+          type: string
+          example: BATS

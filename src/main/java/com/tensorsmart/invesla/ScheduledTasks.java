@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tensorsmart.invesla.service.QuoteUpdateService;
-import com.tensorsmart.invesla.service.StockService;
-import com.tensorsmart.invesla.service.StockUpdateService;
+import com.tensorsmart.invesla.service.StockManagementService;
+import com.tensorsmart.invesla.service.StockDetailUpdateService;
 
 import org.openapitools.model.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +20,13 @@ public class ScheduledTasks {
     private static boolean DEBUG = false;
 
     @Autowired
-    private StockService _stockService;
+    private StockManagementService _stockService;
 
     @Autowired
     private QuoteUpdateService _quoteUpdateService;
 
     @Autowired
-    private StockUpdateService _stockUpdateService;
+    private StockDetailUpdateService _stockUpdateService;
 
     @Scheduled(fixedDelay = 5000, initialDelay = 5000)
     public void refreshQuotes() {
@@ -43,7 +43,7 @@ public class ScheduledTasks {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    @Scheduled(zone = "EST", cron = "0 0 1 * * *")
+    @Scheduled(zone = "EST", cron = "0 0 1 * * MON-FRI")
     public void refreshSymbols() {
         if (ScheduledTasks.DEBUG) {
             return;

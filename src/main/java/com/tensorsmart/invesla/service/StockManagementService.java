@@ -2,6 +2,7 @@ package com.tensorsmart.invesla.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.tensorsmart.invesla.questrade.service.SymbolService;
@@ -15,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StockService {
+public class StockManagementService {
 
     @Autowired
     private StockRepository _repository;
@@ -31,6 +32,14 @@ public class StockService {
         }
 
         return result;
+    }
+
+    public Stock getStockById(String id) {
+        Optional<StockEntity> stockEntity = _repository.findById(id);
+
+        if (stockEntity.isPresent()) return new StockWrapper(stockEntity.get());
+
+        return null;
     }
 
     public void addStocks(List<String> symbols) {

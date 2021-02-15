@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StockUpdateService {
+public class StockDetailUpdateService {
     private static final String ZONE = "America/New_York";
 
     @Autowired

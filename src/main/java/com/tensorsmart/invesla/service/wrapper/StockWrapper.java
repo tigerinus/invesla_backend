@@ -8,5 +8,6 @@ public class StockWrapper extends Stock {
     public StockWrapper(StockEntity stockEntity) {
         setSymbol(stockEntity.getSymbol());
         setSymbolId(stockEntity.getSymbolId());
+        setMarket(stockEntity.getListingExchange());
     }
 }

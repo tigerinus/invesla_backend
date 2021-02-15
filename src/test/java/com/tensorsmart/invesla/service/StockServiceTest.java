@@ -19,7 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 public class StockServiceTest {
 
     @Autowired
-    private StockService _service;
+    private StockManagementService _service;
 
     @MockBean
     private ScheduledTasks _scheduledTasks; // disable scheduledTasks

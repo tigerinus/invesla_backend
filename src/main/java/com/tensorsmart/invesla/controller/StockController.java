@@ -2,7 +2,7 @@ package com.tensorsmart.invesla.controller;
 
 import java.util.List;
 
-import com.tensorsmart.invesla.service.StockService;
+import com.tensorsmart.invesla.service.StockManagementService;
 
 import org.openapitools.api.StocksApi;
 import org.openapitools.model.Stock;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StockController implements StocksApi {
 
     @Autowired
-    private StockService _service;
+    private StockManagementService _service;
 
     @Override
     public ResponseEntity<List<Stock>> getStocks() {

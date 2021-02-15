@@ -18,8 +18,13 @@ public class LoggingInterceptor implements ClientHttpRequestInterceptor {
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
             throws IOException {
 
-        log.info("{} {}", request.getMethod(), request.getURI());
-        return execution.execute(request, body);
+        ClientHttpResponse response = execution.execute(request, body);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            log.info("{} {} [{}]", request.getMethod(), request.getURI(), response.getStatusCode());
+        } else {
+            log.error("{} {} [{}]", request.getMethod(), request.getURI(), response.getStatusCode());
+        }
+        return response;
     }
 
 }

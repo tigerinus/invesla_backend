@@ -31,7 +31,7 @@ public class StockDetailUpdateService {
 
         List<SymbolDetailResponse> symbolDetailResponses = _symbolService.getSymbolDetailByIds(symbolIdList);
 
-        if (symbolDetailResponses.isEmpty())
+        if (symbolDetailResponses == null || symbolDetailResponses.isEmpty())
             return;
 
         List<StockDetailEntity> stockDetailEntityList = symbolDetailResponses.stream()

@@ -20,6 +20,8 @@ public class SymbolService {
     public SymbolResponse getSymbolByName(String symbol) {
         SymbolListResponse response = _connector.searchSymbols(symbol);
 
+        if (response == null) return null;
+
         List<SymbolResponse> list = response.getSymbols();
 
         for (SymbolResponse s : list) {
@@ -39,6 +41,10 @@ public class SymbolService {
         }
 
         SymbolDetailListResponse response = _connector.getSymbols(ids);
+
+        if (response == null) {
+            return null;
+        }
 
         return response.getSymbols();
     }

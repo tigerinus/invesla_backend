@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.tensorsmart.invesla.questrade.connector.MarketConnector;
+import com.tensorsmart.invesla.questrade.connector.response.MarketListResponse;
 import com.tensorsmart.invesla.questrade.connector.response.MarketResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,11 @@ public class MarketService {
     }
 
     public void updateMarkets() {
-        for(MarketResponse market : _connector.getMarkets().getMarkets()) {
+        MarketListResponse marketList = _connector.getMarkets();
+
+        if (marketList == null) return;
+
+        for(MarketResponse market : marketList.getMarkets()) {
             _marketMap.put(market.getName(), market);
         }
     }

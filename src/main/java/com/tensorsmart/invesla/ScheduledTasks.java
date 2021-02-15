@@ -43,7 +43,7 @@ public class ScheduledTasks {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    @Scheduled(zone = "EST", cron = "0 0 1 * * MON-FRI")
+    @Scheduled(zone = "EST", cron = "0 0 6 * * MON-FRI")
     public void refreshSymbols() {
         if (ScheduledTasks.DEBUG) {
             return;

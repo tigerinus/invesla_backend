@@ -15,7 +15,7 @@ public class QuestradeScheduledTasks {
     private MarketService _marketService;
 
     @EventListener(ApplicationReadyEvent.class)
-    @Scheduled(zone = "EST", cron = "0 0 1 * * MON-FRI")
+    @Scheduled(zone = "EST", cron = "0 0 6 * * MON-FRI")
     public void refreshMarkets() {
         _marketService.updateMarkets();
     }

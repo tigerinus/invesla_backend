@@ -32,7 +32,8 @@ create view invesla_stock_detail_prev_3_days_view as
         d2.date_stamp prev_date_2, d2.prev_day_close_price prev_day_2, 
         d1.date_stamp prev_date_1, d1.prev_day_close_price prev_day_1
     from
-    invesla_stocks s,
+    invesla_stocks s
+    full outer join
     (
         select symbol_id, prev_day_close_price, date_stamp from invesla_stock_detail where date_stamp in
         (
@@ -43,7 +44,9 @@ create view invesla_stock_detail_prev_3_days_view as
                 )
             ) where rn=1
         )
-    ) d1,
+    ) d1
+    on s.symbol_id = d1.symbol_id
+    full outer join
     (
         select symbol_id, prev_day_close_price, date_stamp from invesla_stock_detail where date_stamp in
         (
@@ -54,7 +57,9 @@ create view invesla_stock_detail_prev_3_days_view as
                 )
             ) where rn=2
         )
-    ) d2,
+    ) d2
+    on s.symbol_id = d2.symbol_id
+    full outer join
     (
         select symbol_id, prev_day_close_price, date_stamp from invesla_stock_detail where date_stamp in
         (
@@ -66,5 +71,5 @@ create view invesla_stock_detail_prev_3_days_view as
             ) where rn=3
         )
     ) d3
-    where s.symbol_id = d1.symbol_id and s.symbol_id = d2.symbol_id and s.symbol_id = d3.symbol_id;
+    on s.symbol_id = d3.symbol_id
 ```

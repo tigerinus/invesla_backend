@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
-public class StockServiceTest {
+class StockServiceTest {
 
     @Autowired
     private StockManagementService _service;
@@ -30,7 +30,7 @@ public class StockServiceTest {
     private final String symbolId2 = "33317976";
     
     @Test
-    public void test1() {
+    void test1() {
         List<String> symbols = Arrays.asList(symbol1, symbol2);
 
         // delete

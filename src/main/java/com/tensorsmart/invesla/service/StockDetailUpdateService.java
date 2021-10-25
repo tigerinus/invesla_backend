@@ -35,8 +35,7 @@ public class StockDetailUpdateService {
             return;
 
         List<StockDetailEntity> stockDetailEntityList = symbolDetailResponses.stream()
-                .map(response -> StockDetailEntityFactory.get(response)).map(entity -> stamp(entity))
-                .collect(Collectors.toList());
+                .map(StockDetailEntityFactory::get).map(StockDetailUpdateService::stamp).collect(Collectors.toList());
 
         _repository.saveAll(stockDetailEntityList);
     }
@@ -54,15 +53,15 @@ public class StockDetailUpdateService {
 
         LocalDateTime lastWorkDateTime;
 
-        switch(now.getDayOfWeek()) {
-            case MONDAY:
-                lastWorkDateTime = now.minusDays(3);
-                break;
-            case SUNDAY:
-                lastWorkDateTime = now.minusDays(2);
-                break;
-            default:
-                lastWorkDateTime = now.minusDays(1);
+        switch (now.getDayOfWeek()) {
+        case MONDAY:
+            lastWorkDateTime = now.minusDays(3);
+            break;
+        case SUNDAY:
+            lastWorkDateTime = now.minusDays(2);
+            break;
+        default:
+            lastWorkDateTime = now.minusDays(1);
         }
 
         return lastWorkDateTime;

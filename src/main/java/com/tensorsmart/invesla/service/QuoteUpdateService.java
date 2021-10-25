@@ -35,9 +35,11 @@ public class QuoteUpdateService {
     private QuoteRepository _repository;
 
     public void updateQuotes(List<String> symbolIdList) {
-        if (symbolIdList == null || symbolIdList.isEmpty()) return;
+        if (symbolIdList == null || symbolIdList.isEmpty())
+            return;
 
-        List<String> symbolIdStillTradingList = symbolIdList.stream().filter(s -> isSymbolStillTrading(s)).collect(Collectors.toList());
+        List<String> symbolIdStillTradingList = symbolIdList.stream().filter(this::isSymbolStillTrading)
+                .collect(Collectors.toList());
 
         if (symbolIdStillTradingList.isEmpty()) {
             log.debug("no stock is in trading hours right now.");
@@ -46,9 +48,10 @@ public class QuoteUpdateService {
 
         List<QuoteResponse> quoteResponseList = _quoteService.getQuotes(symbolIdStillTradingList);
 
-        if (quoteResponseList == null || quoteResponseList.isEmpty()) return;
+        if (quoteResponseList == null || quoteResponseList.isEmpty())
+            return;
 
-        List<QuoteEntity> quoteEntityList = quoteResponseList.stream().map(response -> QuoteEntityFactory.get(response))
+        List<QuoteEntity> quoteEntityList = quoteResponseList.stream().map(QuoteEntityFactory::get)
                 .collect(Collectors.toList());
 
         _repository.saveAll(quoteEntityList);
@@ -73,9 +76,6 @@ public class QuoteUpdateService {
 
         Date now = new Date();
 
-        if (now.before(market.getExtendedStartTime())) return false;
-        if (now.after(market.getExtendedEndTime())) return false;
-
-        return true;
+        return (!now.before(market.getExtendedStartTime()) && !now.after(market.getExtendedEndTime()));
     }
 }

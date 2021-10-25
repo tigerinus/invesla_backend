@@ -11,7 +11,7 @@ import com.tensorsmart.invesla.questrade.connector.response.SymbolDetailResponse
 
 import org.junit.jupiter.api.Test;
 
-public class SymbolDetailResponseTest {
+class SymbolDetailResponseTest {
 
     @Test
     void deserializationTest() throws JsonMappingException, JsonProcessingException {

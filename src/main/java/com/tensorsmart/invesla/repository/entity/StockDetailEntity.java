@@ -24,7 +24,7 @@ public class StockDetailEntity {
     @Column(name = "date_stamp")
     private String dateStamp;
 
-    @Id    
+    @Id
     @Column(name = "symbol_id")
     private String symbolId;
 
@@ -67,15 +67,15 @@ public class StockDetailEntity {
     @Column(name = "dividend_date")
     private Date dividendDate;
 
-    public static class StockDetailId implements Serializable{
-        
+    public static class StockDetailId implements Serializable {
+
         private static final long serialVersionUID = 5117797463531699904L;
 
         private String dateStamp;
         private String symbolId;
 
         public StockDetailId() {
-            
+
         }
 
         public StockDetailId(String dateStamp, String symbolId) {
@@ -86,6 +86,11 @@ public class StockDetailEntity {
         @Override
         public int hashCode() {
             return (this.dateStamp + this.symbolId).hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return null != obj && obj.hashCode() == hashCode();
         }
     }
 }

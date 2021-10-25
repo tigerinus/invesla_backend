@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
-public class SymbolServiceTest {
+class SymbolServiceTest {
 
     @Autowired
     private SymbolService _service;
@@ -25,20 +25,20 @@ public class SymbolServiceTest {
     private ScheduledTasks _dummyScheduledTasks;
 
     @Test
-    public void getSymbolByNameTest() {
+    void getSymbolByNameTest() {
         SymbolResponse response = _service.getSymbolByName("AI");
 
         assertNotNull(response);
-        assertEquals(response.getSymbol(), "AI");
+        assertEquals("AI", response.getSymbol());
     }
 
     @Test
-    public void getSymbolByIdTest() {
+    void getSymbolByIdTest() {
         List<String> ids = new ArrayList<String>();
         ids.add("8049");
 
         List<SymbolDetailResponse> symbolList = _service.getSymbolDetailByIds(ids);
-        
+
         assertNotNull(symbolList);
         assertEquals(ids.size(), symbolList.size());
 

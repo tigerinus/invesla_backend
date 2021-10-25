@@ -1,5 +1,6 @@
 package com.tensorsmart.invesla.questrade.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tensorsmart.invesla.questrade.connector.SymbolsConnector;
@@ -43,7 +44,7 @@ public class SymbolService {
         SymbolDetailListResponse response = _connector.getSymbols(ids);
 
         if (response == null) {
-            return null;
+            return new ArrayList<>(0);
         }
 
         return response.getSymbols();

@@ -35,7 +35,7 @@ public class DataSourceConfiguration {
     @Primary
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder) {
         LocalContainerEntityManagerFactoryBean entityManager = builder.dataSource(primaryDataSource())
-                .packages(new String[] { "com.tensorsmart.invesla.repository.entity" }).build();
+                .packages("com.tensorsmart.invesla.repository.entity").build();
 
         return entityManager;
     }

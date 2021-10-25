@@ -10,13 +10,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class HiControllerTests {
+class HiControllerTests {
 
     @Autowired
     private MockMvc _mockMvc;
 
     @Test
-    public void checkTest() throws Exception {
+    void checkTest() throws Exception {
         _mockMvc.perform(MockMvcRequestBuilders.get("/")).andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

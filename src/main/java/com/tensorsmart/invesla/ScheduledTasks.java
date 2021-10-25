@@ -34,7 +34,7 @@ public class ScheduledTasks {
             return;
         }
 
-        List<String> symbolIdList = new ArrayList<String>();
+        List<String> symbolIdList = new ArrayList<>();
         for (Stock s : _stockService.getStocks()) {
             symbolIdList.add(s.getSymbolId());
         }
@@ -49,7 +49,7 @@ public class ScheduledTasks {
             return;
         }
 
-        List<String> symbolIdList = new ArrayList<String>();
+        List<String> symbolIdList = new ArrayList<>();
         for (Stock s : _stockService.getStocks()) {
             symbolIdList.add(s.getSymbolId());
         }

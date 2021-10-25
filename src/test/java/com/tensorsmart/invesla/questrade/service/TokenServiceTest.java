@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
-public class TokenServiceTest {
+class TokenServiceTest {
     
     @Autowired
     private TokenService _service;
@@ -21,7 +21,7 @@ public class TokenServiceTest {
     private ScheduledTasks _dummyScheduledTasks;
 
     @Test
-    public void getTokenTest() {
+    void getTokenTest() {
         TokenEntity token = _service.getToken();
 
         assertNotNull(token);

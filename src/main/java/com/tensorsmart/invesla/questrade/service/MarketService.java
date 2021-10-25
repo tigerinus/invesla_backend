@@ -17,7 +17,7 @@ public class MarketService {
     @Autowired
     private MarketConnector _connector;
 
-    private Map<String, MarketResponse> _marketMap = new HashMap<String, MarketResponse>();
+    private Map<String, MarketResponse> _marketMap = new HashMap<>();
 
     public MarketResponse getMarket(String name) {
         Assert.hasText(name, "name should not be empty.");

@@ -1,5 +1,6 @@
 package com.tensorsmart.invesla.questrade.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tensorsmart.invesla.questrade.connector.QuotesConnector;
@@ -11,16 +12,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class QuoteService {
-    
+
     @Autowired
     private QuotesConnector _connector;
 
     public List<QuoteResponse> getQuotes(List<String> symbolIdList) {
-        if (symbolIdList == null || symbolIdList.isEmpty()) return null;
+
+        if (symbolIdList == null || symbolIdList.isEmpty())
+            return new ArrayList<>(0);
 
         QuoteListResponse response = _connector.getQuotes(symbolIdList);
 
-        if (response == null) return null;
+        if (response == null)
+            return new ArrayList<>(0);
 
         return response.getQuotes();
     }

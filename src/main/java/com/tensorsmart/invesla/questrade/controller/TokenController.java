@@ -45,7 +45,7 @@ public class TokenController implements TokenApi {
 
         String refreshToken = tokenRequest.getRefreshToken();
 
-        if (refreshToken == null || refreshToken.isEmpty()) {
+        if (refreshToken.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 

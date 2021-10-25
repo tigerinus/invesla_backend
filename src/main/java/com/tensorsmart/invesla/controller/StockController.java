@@ -27,7 +27,7 @@ public class StockController implements StocksApi {
 
         _service.addStocks(symbols);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok().build();
     }
 
     @Override
@@ -35,6 +35,6 @@ public class StockController implements StocksApi {
     
         _service.deleteStock(symbol);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok().build();
     }
 }

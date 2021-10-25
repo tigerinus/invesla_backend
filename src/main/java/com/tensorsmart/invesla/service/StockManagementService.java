@@ -2,6 +2,7 @@ package com.tensorsmart.invesla.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class StockManagementService {
 
     public List<Stock> getStocks() {
 
-        List<Stock> result = new ArrayList<Stock>();
+        List<Stock> result = new ArrayList<>();
         for (StockEntity stockEntity : _repository.findAll()) {
             result.add(new StockWrapper(stockEntity));
         }
@@ -37,7 +38,8 @@ public class StockManagementService {
     public Stock getStockById(String id) {
         Optional<StockEntity> stockEntity = _repository.findById(id);
 
-        if (stockEntity.isPresent()) return new StockWrapper(stockEntity.get());
+        if (stockEntity.isPresent())
+            return new StockWrapper(stockEntity.get());
 
         return null;
     }
@@ -50,8 +52,7 @@ public class StockManagementService {
 
         List<StockEntity> existingStocks = _repository.findAllBySymbolIn(symbols);
 
-        List<String> existingSymbols = existingStocks.stream().map(stock -> stock.getSymbol())
-                .collect(Collectors.toList());
+        List<String> existingSymbols = existingStocks.stream().map(StockEntity::getSymbol).collect(Collectors.toList());
 
         symbols.removeAll(existingSymbols);
 
@@ -60,8 +61,7 @@ public class StockManagementService {
         }
 
         List<StockEntity> newStocks = symbols.stream().map(symbol -> _symbolService.getSymbolByName(symbol))
-                .filter(symbolResponse -> symbolResponse != null)
-                .map(symbolResponse -> StockEntityFactory.get(symbolResponse)).collect(Collectors.toList());
+                .filter(Objects::nonNull).map(StockEntityFactory::get).collect(Collectors.toList());
 
         _repository.saveAll(newStocks);
     }

@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
-public class QuoteServiceTest {
+class QuoteServiceTest {
     
     @Autowired
     private QuoteService _service;
@@ -25,7 +25,7 @@ public class QuoteServiceTest {
     private ScheduledTasks _dummyScheduledTasks;
 
     @Test
-    public void getQuoteListTest() {
+    void getQuoteListTest() {
         List<String> symbolIdList = Arrays.asList("7956432");
 
         List<QuoteResponse> responseList = _service.getQuotes(symbolIdList);

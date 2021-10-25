@@ -34,7 +34,7 @@ public class TokenDataSourceConfiguration {
     public LocalContainerEntityManagerFactoryBean tokenEntityManagerFactory(EntityManagerFactoryBuilder builder) {
 
         LocalContainerEntityManagerFactoryBean entityManager = builder.dataSource(tokenDataSource())
-                .packages(new String[] { "com.tensorsmart.invesla.questrade.repository.entity" }).build();
+                .packages("com.tensorsmart.invesla.questrade.repository.entity").build();
 
         return entityManager;
     }

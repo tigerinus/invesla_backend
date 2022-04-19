@@ -3,7 +3,7 @@
 ## User and permission setup
 
 ```SQL
-create user invesla_sa identified by "q1w2e3r4Q!W@E#R$";
+create user invesla_sa identified by "Q!W@E#R$q1w2e3r4";
 
 grant create session to invesla_sa;
 grant create table to invesla_sa;
@@ -73,3 +73,18 @@ create view invesla_stock_detail_prev_3_days_view as
     ) d3
     on s.symbol_id = d3.symbol_id
 ```
+
+## Docker
+
+```bash
+docker run --name invesla --restart always -d -v /path/to/wallet:/app/wallet -e ORACLE_DB_WALLET_PATH=/app/wallet wangxiaohu/invesla:$VERSION
+```
+
+## Trouble shooting
+
+- org.hibernate.HibernateException: Access to DialectResolutionInfo cannot be null when 'hibernate.dialect' not set
+
+  - ensure DB_PASS is correct
+  - when new Questrade token is needed, might need to delete the token row from DB first before refreshing
+  - make sure `.vscode/launch.json` and `.vscode/setting.json` has correct `QT_TOKEN_KEY` set in `env`
+  - might need to create a new token on Questrade app hub

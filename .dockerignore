@@ -1,0 +1,57 @@
+# All files and folders irrelevant to docker build should be here.
+#
+# This will maximize the chance of re-using docker build cache, and
+# hence speed up building Docker images
+
+### Markdown ###
+*.md
+
+### k8s ###
+k8s/
+
+### Docker ###
+Dockerfile
+.dockerignore
+
+### git ###
+.git/
+.gitignore
+
+
+##############################
+### copied from .gitignore ###
+##############################
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+.mvn/

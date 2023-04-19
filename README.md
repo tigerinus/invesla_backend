@@ -77,7 +77,7 @@ create view invesla_stock_detail_prev_3_days_view as
 ## Docker
 
 ```bash
-docker run --name invesla --restart always -d -v /path/to/wallet:/app/wallet -e ORACLE_DB_WALLET_PATH=/app/wallet wangxiaohu/invesla:$VERSION
+sudo nerdctl run --name invesla -v /home/ubuntu/.local/share/oracle/wallet_invesla:/app/wallet -e DB_PASS='<password>' -e QT_TOKEN_KEY=<refresh token> -e ORACLE_DB_WALLET_PATH=/app/wallet --restart=always --log-opt max-size=1m -d ghcr.io/tigerinus/invesla:<version>
 ```
 
 ## Trouble shooting

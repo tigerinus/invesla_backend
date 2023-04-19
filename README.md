@@ -88,3 +88,21 @@ docker run --name invesla --restart always -d -v /path/to/wallet:/app/wallet -e 
   - when new Questrade token is needed, might need to delete the token row from DB first before refreshing
   - make sure `.vscode/launch.json` and `.vscode/setting.json` has correct `QT_TOKEN_KEY` set in `env`
   - might need to create a new token on Questrade app hub
+
+- Account Locked
+
+  - Go to Oracle Cloud -> DB Action -> Run as ADMIN
+  
+    ```
+    ALTER USER INVESLA_SA ACCOUNT UNLOCK;
+    ```
+
+- Excel doesn't connect via ODBC
+
+  - Check `SQLNET.ORA` for
+  
+    ```
+    WALLET_LOCATION = (SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY="C:\PATH\TO\wallet_invesla")))
+    ```
+    
+  - Check README under wallet for wallet expiration date

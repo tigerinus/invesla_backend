@@ -80,7 +80,7 @@ create view invesla_stock_detail_prev_3_days_view as
 sudo nerdctl run --name invesla -v /home/ubuntu/.local/share/oracle/wallet_invesla:/app/wallet -e DB_PASS='<password>' -e QT_TOKEN_KEY=<refresh token> -e ORACLE_DB_WALLET_PATH=/app/wallet --restart=always --log-opt max-size=1m -d ghcr.io/tigerinus/invesla:<version>
 ```
 
-## Trouble shooting
+## Troubleshooting
 
 - org.hibernate.HibernateException: Access to DialectResolutionInfo cannot be null when 'hibernate.dialect' not set
 
@@ -88,6 +88,10 @@ sudo nerdctl run --name invesla -v /home/ubuntu/.local/share/oracle/wallet_inves
   - when new Questrade token is needed, might need to delete the token row from DB first before refreshing
   - make sure `.vscode/launch.json` and `.vscode/setting.json` has correct `QT_TOKEN_KEY` set in `env`
   - might need to create a new token on Questrade app hub
+
+- Password Expired
+  - ODBC -> Test Connection -> Enter old password -> Prompt to reset password
+  - Open Excel spreadsheet file and enter new password when prompted
 
 - Account Locked
 
